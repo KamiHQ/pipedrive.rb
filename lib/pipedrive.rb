@@ -42,7 +42,7 @@ module Pipedrive
   reset!
 end
 
-require 'pipedrive/railties' if defined?(::Rails)
+require 'pipedrive/railties' if defined?(Rails)
 
 # Core
 require 'pipedrive/base'
@@ -51,6 +51,7 @@ require 'pipedrive/operations/create'
 require 'pipedrive/operations/read'
 require 'pipedrive/operations/update'
 require 'pipedrive/operations/delete'
+require 'pipedrive/operations/search'
 
 # Persons
 require 'pipedrive/person_field'
