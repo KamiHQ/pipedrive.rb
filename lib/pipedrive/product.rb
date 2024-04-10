@@ -6,5 +6,6 @@ module Pipedrive
     include ::Pipedrive::Operations::Create
     include ::Pipedrive::Operations::Update
     include ::Pipedrive::Operations::Delete
+    include ::Pipedrive::Operations::Search
   end
 end
