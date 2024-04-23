@@ -10,7 +10,13 @@ module Pipedrive
         res = __send__(method, *args, params.merge(start: start))
         break if !res.try(:data) || !res.success?
 
-        res.data.each(&block)
+        if res.data.try(:items).present?
+          res.data.items.each do |item|
+            yield item.item
+          end
+        else
+          res.data.each(&block)
+        end
         break unless res.try(:additional_data).try(:pagination).try(:more_items_in_collection?)
 
         start = res.try(:additional_data).try(:pagination).try(:next_start)
