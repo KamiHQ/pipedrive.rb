@@ -53,7 +53,7 @@ module Pipedrive
         status: res.status,
         not_authorized: false,
         failed: false,
-        headers: res.headers
+        headers: res.try(:headers)
       )
       case res.status
       when 401
