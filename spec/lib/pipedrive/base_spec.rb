@@ -38,8 +38,10 @@ RSpec.describe ::Pipedrive::Base do
 
       it {
         expect(subject).to eq(::Hashie::Mash.new({
-                                                   failed:         false,
+                                                  failed:         false,
+                                                  headers:        nil,
                                                   not_authorized: true,
+                                                  status:         401,
                                                   success:        false
                                                  }))
       }
@@ -51,8 +53,10 @@ RSpec.describe ::Pipedrive::Base do
       it {
         expect(subject).to eq(::Hashie::Mash.new({
                                                    failed:         true,
-                                                  not_authorized: false,
-                                                  success:        false
+                                                   headers:        nil,
+                                                   not_authorized: false,
+                                                   status:         420,
+                                                   success:        false
                                                  }))
       }
     end
@@ -63,8 +67,10 @@ RSpec.describe ::Pipedrive::Base do
       it {
         expect(subject).to eq(::Hashie::Mash.new({
                                                    failed:         false,
-                                                  not_authorized: false,
-                                                  success:        false
+                                                   headers:        nil,
+                                                   not_authorized: false,
+                                                   status:         400,
+                                                   success:        false
                                                  }))
       }
     end
@@ -142,8 +148,7 @@ RSpec.describe ::Pipedrive::Base do
 
     it 'calls Hashie::Mash if return empty string' do
       stub_request(:get, 'https://api.pipedrive.com/v1/bases?api_token=token').to_return(status: 200, body: '', headers: {})
-      expect(::Hashie::Mash).to receive(:new).with(success: true).and_call_original
-      expect(subject.make_api_call(:get))
+      expect(subject.make_api_call(:get)).to eq ::Hashie::Mash.new({ success: true, headers: {}})
     end
 
     it 'calls #failed_response if failed status' do
