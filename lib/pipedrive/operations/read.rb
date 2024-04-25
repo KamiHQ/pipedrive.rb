@@ -25,6 +25,8 @@ module Pipedrive
       end
 
       def find_by_id(id)
+        raise ArgumentError, "id must be Integer or String" unless id.is_a?(String) || id.is_a?(Integer)
+
         make_api_call(:get, id)
       end
     end
