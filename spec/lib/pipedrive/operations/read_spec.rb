@@ -10,9 +10,18 @@ RSpec.describe ::Pipedrive::Operations::Read do
   end
 
   describe '#find_by_id' do
-    it 'calls #make_api_call' do
+    it 'calls #make_api_call with an integer ID' do
       expect(subject).to receive(:make_api_call).with(:get, 12)
       subject.find_by_id(12)
+    end
+
+    it 'calls #make_api_call with a string ID' do
+      expect(subject).to receive(:make_api_call).with(:get, "12")
+      subject.find_by_id("12")
+    end
+
+    it 'raises when id is neither an integer nor a string' do
+      expect { subject.find_by_id({id: 12}) }.to raise_error(ArgumentError, "id must be Integer or String")
     end
   end
 
