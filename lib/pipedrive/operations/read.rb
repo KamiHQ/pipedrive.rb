@@ -13,8 +13,25 @@ module Pipedrive
         follow_pagination(:chunk, [], params, &block)
       end
 
+      def each_item(id, item_path_name, params = {}, before_request = nil, &block)
+        return to_enum(:each_item, id, item_path_name, params, before_request) unless block_given?
+
+        follow_pagination(:list_item, [id, item_path_name], params, before_request, &block)
+      end
+
       def all(params = {})
         each(params).to_a
+      end
+
+      def list_all_items(id, item_path_name, params = {}, before_request = nil, &block)
+        each_item(id, item_path_name, params, before_request, &block).to_a
+      end
+
+      def list_item(id, item_path_name, params = {})
+        res = make_api_call(:get, id, params.merge({ item_path_name: item_path_name }))
+        return [] unless res.success?
+
+        res
       end
 
       def chunk(params = {})
@@ -25,7 +42,7 @@ module Pipedrive
       end
 
       def find_by_id(id)
-        raise ArgumentError, "id must be Integer or String" unless id.is_a?(String) || id.is_a?(Integer)
+        raise ArgumentError, 'id must be Integer or String' unless id.is_a?(String) || id.is_a?(Integer)
 
         make_api_call(:get, id)
       end
