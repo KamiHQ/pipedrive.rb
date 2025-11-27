@@ -17,7 +17,7 @@ module Pipedrive
       method = args[0]
       raise 'method param missing' unless method.present?
 
-      url = build_url(args, params.delete(:fields_to_select), params.delete(:item_path_name))
+      url = build_url(args, params.delete(:fields_to_select))
       params = params.to_json unless method.to_sym == :get
       begin
         res = connection.__send__(method.to_sym, url, params)
@@ -27,10 +27,9 @@ module Pipedrive
       process_response(res)
     end
 
-    def build_url(args, fields_to_select = nil, item_path_name = nil)
+    def build_url(args, fields_to_select = nil)
       url = +"/v1/#{entity_name}"
       url << "/#{args[1]}" if args[1]
-      url << "/#{item_path_name}" if item_path_name
       url << ":(#{fields_to_select.join(',')})" if fields_to_select.is_a?(::Array) && fields_to_select.size.positive?
       url << "?api_token=#{@api_token}"
       url
