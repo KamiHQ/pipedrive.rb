@@ -4,9 +4,11 @@ module Pipedrive
   module Utils
     extend ActiveSupport::Concern
 
-    def follow_pagination(method, args, params, &block)
+    def follow_pagination(method, args, params, before_request = nil, &block)
       start = params[:start] || 0
       loop do
+        before_request&.call
+
         res = __send__(method, *args, params.merge(start: start))
         break if !res.try(:data) || !res.success?
 
