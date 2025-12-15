@@ -48,7 +48,7 @@ module Pipedrive
     end
 
     def failed_response(res)
-      failed_res = res.body.merge(
+      failed_res = (res.body || {}).merge(
         success: false,
         status: res.status,
         not_authorized: false,
