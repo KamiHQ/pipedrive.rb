@@ -13,8 +13,8 @@ module Pipedrive
         follow_pagination(:chunk, [], params, &block)
       end
 
-      def all(params = {})
-        each(params).to_a
+      def all(params = {}, &block)
+        each(params, &block).to_a
       end
 
       def chunk(params = {})
@@ -31,7 +31,7 @@ module Pipedrive
       end
 
       def all_items(id, item_path_name, params = {}, &block)
-        each_items(id, item_path_name, params, block).to_a
+        each_items(id, item_path_name, params, &block).to_a
       end
 
       def item_chunk(id, item_path_name, params = {})
