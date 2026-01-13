@@ -7,14 +7,15 @@ module Pipedrive
       include ::Enumerable
       include ::Pipedrive::Utils
 
-      def each(params = {}, &block)
-        return to_enum(:each, params) unless block_given?
+      def each(params = {}, before_request = nil, &block)
+        return to_enum(:each, params, before_request) unless block_given?
 
-        follow_pagination(:chunk, [], params, &block)
+        follow_pagination(:chunk, [], params, before_request, &block)
       end
 
       def all(params = {}, &block)
-        each(params, &block).to_a
+        # block is not pass down as block but as a lambda method
+        each(params, block).to_a
       end
 
       def chunk(params = {})
@@ -31,7 +32,8 @@ module Pipedrive
       end
 
       def all_items(id, item_path_name, params = {}, &block)
-        each_items(id, item_path_name, params, &block).to_a
+        # block is not pass down as block but as a lambda method
+        each_items(id, item_path_name, params, block).to_a
       end
 
       def item_chunk(id, item_path_name, params = {})
