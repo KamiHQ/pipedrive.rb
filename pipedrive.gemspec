@@ -18,13 +18,14 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}) { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
-  gem.required_ruby_version = '>=2.5'
+  gem.required_ruby_version = '>=3.4'
 
   gem.add_dependency('activesupport', '>= 4.0.0')
-  gem.add_dependency('faraday')
-  gem.add_dependency('faraday_middleware')
+  gem.add_dependency('base64')
+  gem.add_dependency('faraday', '>= 2.14.0')
+  gem.add_dependency('faraday-mashify')
   gem.add_dependency('hashie', '>= 3.0')
-  gem.add_development_dependency('bundler')
+  gem.add_development_dependency('bundler', '>= 2.6.9')
   gem.add_development_dependency('rake', '> 12')
   gem.add_development_dependency('rspec', '>= 3.0')
   gem.add_development_dependency('rubocop')
