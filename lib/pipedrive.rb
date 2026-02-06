@@ -6,9 +6,9 @@ require 'active_support/core_ext/array'
 require 'active_support/concern'
 require 'active_support/inflector'
 
-require 'hashie'
-require 'faraday_middleware'
 require 'faraday'
+require 'faraday/mashify'
+require 'hashie'
 require 'pipedrive/version'
 
 module Pipedrive

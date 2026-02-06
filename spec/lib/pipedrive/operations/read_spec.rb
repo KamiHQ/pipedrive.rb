@@ -35,7 +35,7 @@ RSpec.describe ::Pipedrive::Operations::Read do
     end
 
     it 'calls to_enum with params' do
-      expect(subject).to receive(:to_enum).with(:each, { foo: 'bar' })
+      expect(subject).to receive(:to_enum).with(:each, { foo: 'bar' }, nil)
       subject.each(foo: 'bar')
     end
 

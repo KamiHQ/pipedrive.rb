@@ -9,7 +9,7 @@ module Pipedrive
       loop do
         before_request&.call
 
-        res = __send__(method, *args, params.merge(start: start))
+        res = __send__(method, *args, **params.merge(start: start))
         break if !res.try(:data) || !res.success?
 
         if res.data.try(:items).present?
